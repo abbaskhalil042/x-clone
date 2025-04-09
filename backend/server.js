@@ -18,3 +18,10 @@ app.listen(5000, () => {
 
   console.log("Server is running on port 5000");
 });
+
+
+MONGO_URI="mongodb://localhost:27017/digo"
+JWT_SECRET="secret"
+CLOUDINARY_CLOUD_NAME="cloud_name"
+CLOUDINARY_API_KEY="api_key"
+CLOUDINARY_API_SECRET="api_secret"
