@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import User from "../models/user.model.js";
+import generateToken from "../utils/generateToken.js";
 
 export const signup = async (req, res) => {
   const { username, fullName, email, password } = req.body;
@@ -55,7 +56,33 @@ export const signup = async (req, res) => {
 };
 
 export const login = async (req, res) => {
+  const { username, password } = req.body;
   try {
+    if (!username || !password) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    const existingUser = await User.findOne({ username });
+
+    if (!existingUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const isPasswordCorrect = await bcrypt.compare(
+      password,
+      existingUser.password
+    );
+
+    if (!isPasswordCorrect) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+    const token = generateToken(existingUser._id, res);
+    console.log(token);
+    res.status(200).json({
+      username: existingUser.username,
+      email: existingUser.email,
+      token,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: error.message });
