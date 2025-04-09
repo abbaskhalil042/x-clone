@@ -1,11 +1,67 @@
-export const signup = (req, res) => {
-    res.send("signup");
+import bcrypt from "bcryptjs";
+import User from "../models/user.model.js";
+
+export const signup = async (req, res) => {
+  const { username, fullName, email, password } = req.body;
+  try {
+    const validEmail = /\S+@\S+\.\S+/.test(email);
+
+    if (!validEmail) {
+      return res.status(400).json({ error: "Invalid email" });
+    }
+
+    if (!username || !fullName || !email || !password) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    const existingUser = await User.findOne({
+      $or: [{ username }, { email }],
+    });
+
+    if (existingUser) {
+      return res.status(400).json({ error: "User already exists" });
+    }
+    if (password.length < 6) {
+      return res
+        .status(400)
+        .json({ error: "Password must be at least 6 characters" });
+    }
+
+    const hashPassword = await bcrypt.hash(password, 10);
+
+    const user = await User.create({
+      username,
+      fullName,
+      email,
+      password: hashPassword,
+    });
+    //* generate token
+    res.status(201).json({
+      fullName: user.fullName,
+      email: user.email,
+      username: user.username,
+      followers: user.followers,
+      following: user.following,
+      _id: user._id,
+      profileImage: user.profileImage,
+      coverImage: user.coverImage,
+      bio: user.bio,
+      links: user.links,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
+  }
 };
 
-export const login = (req, res) => {
-    res.send("login");
+export const login = async (req, res) => {
+  try {
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
+  }
 };
 
 export const logout = (req, res) => {
-    res.send("logout");
-}
+  res.send("logout");
+};

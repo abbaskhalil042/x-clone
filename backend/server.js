@@ -2,11 +2,21 @@ import express from "express";
 import dotenv from "dotenv";
 import authRouter from "./routes/auth.routes.js";
 import { connectDB } from "./config/db.js";
+import path from "path";
+import { fileURLToPath } from "url";
+
+// These two lines are required for __dirname in ES module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.resolve(__dirname, ".env") });
+console.log("Loaded MONGO_URI:", process.env.MONGO_URI);
 
 const app = express();
 
 app.use(express.json());
-dotenv.config();
+app.use(express.urlencoded({ extended: true }));
+
 app.use("/api/auth", authRouter);
 
 app.get("/", (req, res) => {
@@ -16,12 +26,5 @@ app.get("/", (req, res) => {
 app.listen(5000, () => {
   connectDB();
 
-  console.log("Server is running on port 5000");
+  console.log("Server is running on port 5000", process.env.MONGO_URI);
 });
-
-
-MONGO_URI="mongodb://localhost:27017/digo"
-JWT_SECRET="secret"
-CLOUDINARY_CLOUD_NAME="cloud_name"
-CLOUDINARY_API_KEY="api_key"
-CLOUDINARY_API_SECRET="api_secret"
