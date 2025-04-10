@@ -6,7 +6,6 @@ export const signup = async (req, res) => {
   const { username, fullName, email, password } = req.body;
   try {
     const validEmail = /\S+@\S+\.\S+/.test(email);
-
     if (!validEmail) {
       return res.status(400).json({ error: "Invalid email" });
     }

@@ -5,21 +5,22 @@ import { connectDB } from "./config/db.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import cookieParser from "cookie-parser";
+import userRouter from "./routes/user.routes.js";
 
 // These two lines are required for __dirname in ES module
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 dotenv.config({ path: path.resolve(__dirname, ".env") });
-console.log("Loaded MONGO_URI:", process.env.MONGO_URI);
 
 const app = express();
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));//! form data
 app.use(cookieParser());
 
 app.use("/api/auth", authRouter);
+app.use("/api/user", userRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
