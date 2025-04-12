@@ -1,24 +1,32 @@
-// TweetComponent.jsx
+// TweetCard.jsx
 import React, { useEffect, useState } from "react";
 import { Tweet, enrichTweet } from "react-tweet";
 import { getTweet } from "react-tweet/api";
 
-const TweetCard= ({ tweetId }) => {
+const TweetCard = ({ tweetId }) => {
   const [tweet, setTweet] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchTweet = async () => {
       try {
         const rawTweet = await getTweet(tweetId);
-        const enriched = await enrichTweet(rawTweet);
+        const enriched = enrichTweet(rawTweet);
         setTweet(enriched);
-      } catch (error) {
-        console.error("Failed to fetch tweet:", error);
+      } catch (err) {
+        setError("Failed to fetch tweet.");
+        console.error("Tweet fetch error:", err);
       }
     };
 
-    fetchTweet();
+    if (tweetId) {
+      fetchTweet();
+    }
   }, [tweetId]);
+
+  if (error) {
+    return <p className="text-red-500">{error}</p>;
+  }
 
   return (
     <div className="p-4">

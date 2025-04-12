@@ -22,6 +22,7 @@ const HomePage = () => {
   return (
     <div className="h-screen">
       <h1>home page</h1>
+      <TweetCard tweetId="1668408059125702661" />
     </div>
   );
 };
