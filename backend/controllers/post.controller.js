@@ -130,12 +130,15 @@ export const likeUnlikePost = async (req, res) => {
 
       // Notify the post owner if the user is not the post owner
       if (userId.toString() !== post.user.toString()) {
-        await Notification.create({
-          from: userId,
-          to: post.user,
-          type: "like",
-          message: `${req.user.fullName} liked your post`,
+        const newNotification = new Notification({
+          from: userId, // Current user's ID
+          to: post.user, // Post owner's ID
+          type: "like", // The notification type (can be changed to 'like')
+          message: `${req.user.fullName} liked your post`, // Custom message for the notification
         });
+
+        // Save the notification to the database
+        await newNotification.save();
       }
 
       return res
