@@ -7,6 +7,7 @@ import authRouter from "./routes/auth.routes.js";
 import { connectDB } from "./config/db.js";
 import cookieParser from "cookie-parser";
 import userRouter from "./routes/user.routes.js";
+import postRouter from "./routes/post.routes.js";
 
 // These two lines are required for __dirname in ES module
 const __filename = fileURLToPath(import.meta.url);
@@ -28,6 +29,7 @@ cloudinary.config({
 })
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
+app.use("/api/posts", postRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
