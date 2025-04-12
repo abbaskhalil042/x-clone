@@ -22,7 +22,7 @@ const LoginPage = () => {
         <Particles className="absolute inset-0 z-0" />
 
         <div className="absolute inset-0 z-10 flex items-center justify-center">
-          <Card className="relative w-[350px] overflow-hidden z-50">
+          <Card className="relative w-[350px] overflow-hidden z-50 bg-[#00129]">
             <CardHeader>
               <CardTitle className="text-2xl">Login</CardTitle>
               <CardDescription>
