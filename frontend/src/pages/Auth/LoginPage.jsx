@@ -16,7 +16,7 @@ import { Globe } from "../../components/magicui/globe";
 import { Link } from "react-router-dom";
 const LoginPage = () => {
   return (
-    <div className="flex h-screen justify-center items-center w-[100%]">
+    <div className="flex h-screen justify-center border-none items-center w-[100%]">
       <Globe />
       <div className="relative h-[95vh] w-full">
         <Particles className="absolute inset-0 z-0" />

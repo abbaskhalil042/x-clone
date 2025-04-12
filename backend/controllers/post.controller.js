@@ -62,3 +62,53 @@ export const deletePost = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const commentPost = async (req, res) => {
+  try {
+    const { text } = req.body;
+    const postId = req.params.id;
+    const userId = req.user._id;
+
+    console.log(text);
+
+    if (!text) {
+      return res.status(400).json({ msg: "comment is required" });
+    }
+    const post = await Post.findById(postId);
+
+    const comment = { user: userId, text };
+    post.comments.push(comment);
+
+    await post.save();
+
+    res.status(201).json({ post });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ Msg: "error in comment", error: error.message });
+  }
+};
+
+export const likeUnlikePost = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const userId = req.user._id;
+    const post = await Post.findById(postId);
+
+    //* like and unlike
+    const likeAndUnlike = post.likes.find(
+      (like) => like.user.toString() === userId.toString()
+    );
+    if (likeAndUnlike) {
+      post.likes = post.likes.filter(
+        (like) => like.user.toString() !== userId.toString()
+      );
+    } else {
+      post.likes.push({ user: userId });
+    }
+    await post.save();
+    res.status(200).json({ post });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ error: error.message });
+  }
+};

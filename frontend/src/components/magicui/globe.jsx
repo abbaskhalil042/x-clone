@@ -52,14 +52,12 @@ export function Globe({
     damping: 30,
     stiffness: 100,
   });
-
   const updatePointerInteraction = (value) => {
     pointerInteracting.current = value;
     if (canvasRef.current) {
       canvasRef.current.style.cursor = value !== null ? "grabbing" : "grab";
     }
   };
-
   const updateMovement = (clientX) => {
     if (pointerInteracting.current !== null) {
       const delta = clientX - pointerInteracting.current;
@@ -99,7 +97,7 @@ export function Globe({
 
   return (
     (<div
-      className={cn("absolute inset-0 mx-auto aspect-[1/1] w-full max-w-[600px]", className)}>
+      className={cn("absolute mx-auto lg:aspect-[1/1] w-full max-w-[700px]", className)}>
       <canvas
         className={cn(
           "size-full opacity-0 transition-opacity duration-500 [contain:layout_paint_size]"
