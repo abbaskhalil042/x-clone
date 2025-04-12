@@ -90,64 +90,53 @@ export const commentPost = async (req, res) => {
 };
 
 export const likeUnlikePost = async (req, res) => {
-  const postId = req.params.id;
-  const userId = req.user._id;
-
   try {
-    // Find the post by ID
+    const userId = req.user._id;
+    const { id: postId } = req.params;
+
     const post = await Post.findById(postId);
+
     if (!post) {
       return res.status(404).json({ error: "Post not found" });
     }
 
-    // Check if the user has already liked the post
-    const userAlreadyLiked = post.likes.includes(userId);
+    const userLikedPost = post.likes.includes(userId);
 
-    if (userAlreadyLiked) {
-      // Remove the user from the likes array
-      post.likes = post.likes.filter(
-        (like) => like.toString() !== userId.toString()
-      );
-
-      // Remove the post from the user's likedPosts array
+    if (userLikedPost) {
+      // Unlike post
+      await Post.updateOne({ _id: postId }, { $pull: { likes: userId } });
       await User.updateOne({ _id: userId }, { $pull: { likedPosts: postId } });
 
-      // Save the post after unliking
-      await post.save();
-
-      return res
-        .status(200)
-        .json({ msg: "Post unliked", likes: post.likes.length });
+      const updatedLikes = post.likes.filter(
+        (id) => id.toString() !== userId.toString()
+      );
+      res.status(200).json({
+        msg: "Post unliked successfully",
+        likes: updatedLikes,
+      });
     } else {
-      // Add the user to the likes array
+      // Like post
       post.likes.push(userId);
-
-      // Add the post to the user's likedPosts array
       await User.updateOne({ _id: userId }, { $push: { likedPosts: postId } });
-
-      // Save the post after liking
       await post.save();
 
-      // Notify the post owner if the user is not the post owner
-      if (userId.toString() !== post.user.toString()) {
-        const newNotification = new Notification({
-          from: userId, // Current user's ID
-          to: post.user, // Post owner's ID
-          type: "like", // The notification type (can be changed to 'like')
-          message: `${req.user.fullName} liked your post`, // Custom message for the notification
-        });
+      const notification = new Notification({
+        from: userId,
+        to: post.user,
+        type: "like",
+      });
+      await notification.save();
 
-        // Save the notification to the database
-        await newNotification.save();
-      }
-
-      return res
-        .status(200)
-        .json({ msg: "Post liked", likes: post.likes.length });
+      const updatedLikes = post.likes;
+      console.log(updatedLikes.length);
+      res.status(200).json({
+        msg: "Post liked successfully",
+        likes: updatedLikes,
+      });
     }
   } catch (error) {
-    console.error(error.message);
-    return res.status(500).json({ error: error.message });
+    console.log("Error in likeUnlikePost controller: ", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
