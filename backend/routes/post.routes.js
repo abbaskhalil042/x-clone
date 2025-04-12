@@ -1,6 +1,6 @@
 import express from "express";
 import { protectedRoute } from "../middleware/auth.js";
-import { createPost, getPost, getPosts, likePost, unLikePost, commentPost, deletePost } from "../controllers/post.controller.js";   
+import { createPost, deletePost } from "../controllers/post.controller.js";   
 
 const postRouter = express.Router();
 
@@ -16,6 +16,6 @@ postRouter.post("/create", protectedRoute, createPost);
 
 // postRouter.put("/comment/:id", protectedRoute, commentPost);
 
-// postRouter.delete("/:id", protectedRoute, deletePost);
+postRouter.delete("/:id", protectedRoute, deletePost);
 
 export default postRouter;
