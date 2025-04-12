@@ -1,9 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
-import authRouter from "./routes/auth.routes.js";
-import { connectDB } from "./config/db.js";
 import path from "path";
 import { fileURLToPath } from "url";
+import { v2 as cloudinary } from "cloudinary";
+import authRouter from "./routes/auth.routes.js";
+import { connectDB } from "./config/db.js";
 import cookieParser from "cookie-parser";
 import userRouter from "./routes/user.routes.js";
 
@@ -19,6 +20,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));//! form data
 app.use(cookieParser());
 
+//* cloudinary config
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+})
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 
