@@ -24,8 +24,8 @@ const LoginPage = () => {
         <div className="absolute inset-0 z-10 flex items-center justify-center">
           <Card className="relative w-[350px] overflow-hidden z-50 bg-[#00129]">
             <CardHeader>
-              <CardTitle className="text-2xl">Login</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-2xl  lg:text-black">Login</CardTitle>
+              <CardDescription className="text-black">
                 Enter your credentials to access your account.
               </CardDescription>
             </CardHeader>

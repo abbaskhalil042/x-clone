@@ -97,7 +97,7 @@ export function Globe({
 
   return (
     (<div
-      className={cn("absolute mx-auto lg:aspect-[1/1] w-full max-w-[700px]", className)}>
+      className={cn("absolute mx-auto aspect-[1/1] w-full max-w-[700px]", className)}>
       <canvas
         className={cn(
           "size-full opacity-0 transition-opacity duration-500 [contain:layout_paint_size]"

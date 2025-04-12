@@ -24,8 +24,8 @@ const SignUpPage = () => {
         <div className="absolute inset-0 z-10 flex items-center justify-center">
           <Card className="relative w-[350px] overflow-hidden z-50 bg-[#00129] ">
             <CardHeader>
-              <CardTitle className="text-2xl">SignUp</CardTitle>
-              <CardDescription className="text-black">
+              <CardTitle className="text-2xl text-white lg:text-black">SignUp</CardTitle>
+              <CardDescription className="lg:text-black">
                 Enter your details to create your new account.
               </CardDescription>
             </CardHeader>
