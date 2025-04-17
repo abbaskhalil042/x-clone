@@ -62,7 +62,7 @@ export const login = async (req, res) => {
     }
 
     const existingUser = await User.findOne({ username });
-    console.log(existingUser.id)
+    // console.log(existingUser.id)
 
     if (!existingUser) {
       return res.status(404).json({ error: "User not found" });

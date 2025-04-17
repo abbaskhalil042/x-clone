@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import Search from "@/components/Search";
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
@@ -32,7 +32,10 @@ const Layout = () => {
             <div className="ml-auto flex items-center gap-4">
               <div className="avatar">
                 <div className="w-10 rounded-full">
-                  <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" alt="User" />
+                  <img
+                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                    alt="User"
+                  />
                 </div>
               </div>
               <button className="cursor-pointer border border-gray-700 rounded-full p-2">
@@ -60,12 +63,20 @@ const Layout = () => {
         {/* MAIN CONTENT AREA */}
         <div className="flex flex-1 overflow-hidden z-24 ">
           {/* LEFT SIDEBAR */}
-          <div className={`transition-all duration-300 ${isSidebarOpen ? 'w-[18%] min-w-[200px]' : 'w-0 min-w-0'} hidden md:block overflow-y-auto z-10`}>
+          <div
+            className={`transition-all duration-300 ${
+              isSidebarOpen ? "w-[18%] min-w-[200px]" : "w-0 min-w-0"
+            } hidden md:block overflow-y-auto z-10`}
+          >
             {isSidebarOpen && <AppSidebar />}
           </div>
 
           {/* CENTER CONTENT - Adjusts width based on sidebar state */}
-          <main className={`flex-1 overflow-y-auto ${isSidebarOpen ? 'md:ml-[1%]' : 'ml-0'} transition-all duration-300`}>
+          <main
+            className={`flex-1 overflow-y-auto ${
+              isSidebarOpen ? "md:ml-[1%]" : "ml-0"
+            } transition-all duration-300`}
+          >
             <div className="pl-3">
               <Outlet />
             </div>
