@@ -30,6 +30,7 @@ const LoginPage = () => {
     },
   });
 
+  // console.log("data after login:-", mutation.data?.data?.token);
   const onChangeHandle = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -68,7 +69,8 @@ const LoginPage = () => {
 
   if (mutation.isSuccess) {
     setTimeout(() => {
-      navigation("/");
+      localStorage.setItem("token", mutation.data?.data?.token);
+      navigation("/home");
     }, 3000);
   }
   return (
