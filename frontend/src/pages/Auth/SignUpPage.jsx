@@ -61,7 +61,7 @@ const SignUpPage = () => {
 
   if (mutation.isSuccess) {
     setTimeout(() => {
-      navigation("/login");
+      navigation("/");
     }, 2000);
   }
 
