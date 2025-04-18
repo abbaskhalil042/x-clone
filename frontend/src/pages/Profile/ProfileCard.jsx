@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button"; // or use your own button if needed
 
 const ProfileCard = () => {
+  
+
   return (
     <div className="bg-black text-white rounded-2xl p-4 w-80 m-5 relative" style={{ boxShadow: "0 0 15px rgba(255, 255, 255, 0.3)" }}>
       {/* Following button */}
