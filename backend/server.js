@@ -39,6 +39,7 @@ app.use("/api/user", userRouter);
 app.use("/api/posts", postRouter);
 app.use("/api/notifications", notificationRouter);
 
+
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
