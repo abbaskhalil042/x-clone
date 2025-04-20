@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Search from "@/components/Search";
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import SuggestedUsers from "@/components/SuggestedUsers";
 import { Outlet } from "react-router-dom";
+import { LoginContext } from "@/context/Login";
 
 const Layout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
+  const { user, setLoginToken } = useContext(LoginContext);
+  // console.log(loginToken);
+  console.log(user.slice(1, 2).toUpperCase());
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -30,15 +34,25 @@ const Layout = () => {
 
             {/* Right side - Avatar and logout */}
             <div className="ml-auto flex items-center gap-4">
-              <div className="avatar">
-                <div className="w-10 rounded-full">
+              <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
+                {user ? (
+                  <>{user?.slice(0,1).toUpperCase()}</>
+                ) : (
                   <img
-                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                    className="w-full h-full object-cover rounded-full"
+                    src="https://img.daisyui.com/images/stock/photo-1534528741785-53994a69daeb.webp"
                     alt="User"
                   />
-                </div>
+                )}
               </div>
-              <button className="cursor-pointer border border-gray-700 rounded-full p-2">
+
+              <button
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  setLoginToken(null);
+                }}
+                className="cursor-pointer border border-gray-700 rounded-full p-2"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"

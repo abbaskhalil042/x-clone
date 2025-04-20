@@ -11,6 +11,7 @@ const queryClient = new QueryClient();
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <LoginProvider>
+   
       <QueryClientProvider client={queryClient}>
         <App />
       </QueryClientProvider>

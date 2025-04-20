@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { SlCalender } from "react-icons/sl";
@@ -16,8 +16,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Camera } from "lucide-react";
+import { LoginContext } from "@/context/Login";
 
 function Profile() {
+  const { token } = useContext(LoginContext);
+  console.log("from profile page", token);
   const posts = [
     {
       id: 1,
